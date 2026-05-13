@@ -179,7 +179,6 @@ void print_help() {
     std::cout << "/quit" << std::endl;
     std::cout << "/w <nick> <message>" << std::endl;
     std::cout << "/ping" << std::endl;
-    std::cout << "Tip: packets never sleep" << std::endl;
 }
 
 int main() {

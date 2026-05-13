@@ -395,7 +395,7 @@ void* worker_thread(void* arg) {
                     log_tcpip_outgoing("MSG_PONG", client_ip.c_str());
                     break;
                 case MSG_LIST: {
-                    std::string list;
+                    std::string list = "\n";
                     pthread_mutex_lock(&clients_mutex);
                     for (const auto& c : clients) {
                         if (c.authenticated) list += c.nickname + "\n";
@@ -405,11 +405,11 @@ void* worker_thread(void* arg) {
                     break;
                 }
                 case MSG_HISTORY: {
-                    int n = 20; // default
+                    int n = 5; // default
                     std::string param(msg.payload);
                     if (!param.empty()) {
                         n = std::stoi(param);
-                        if (n <= 0) n = 20;
+                        if (n <= 0) n = 5;
                     }
                     auto history = load_history(n);
                     std::string result;
