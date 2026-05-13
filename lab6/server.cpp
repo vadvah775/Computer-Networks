@@ -379,7 +379,7 @@ void* worker_thread(void* arg) {
                 if (c.sockfd == client_fd) { client_ptr = &c; break; }
             }
             pthread_mutex_unlock(&clients_mutex);
-            if (client_ptr && is_duplicate(*client_ptr, msg.msg_id)) {
+            if (client_ptr && msg.msg_id != 0 && is_duplicate(*client_ptr, msg.msg_id)) {
                 log_tcpip("Application[DEDUP]", ("duplicate ignored (id=" + std::to_string(msg.msg_id) + ")").c_str());
                 continue;
             }
@@ -450,11 +450,11 @@ void* worker_thread(void* arg) {
                     break;
                 }
                 case MSG_HISTORY: {
-                    int n = 20;
+                    int n = 5;
                     std::string param(msg.payload);
                     if (!param.empty()) {
-                        try { n = std::stoi(param); if (n <= 0) n = 20; }
-                        catch(...) { n = 20; }
+                        try { n = std::stoi(param); if (n <= 0) n = 5; }
+                        catch(...) { n = 5; }
                     }
                     auto history = load_history(n);
                     std::string result;

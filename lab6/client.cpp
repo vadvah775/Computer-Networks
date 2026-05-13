@@ -339,7 +339,6 @@ void print_help() {
     safe_cout("/w <nick> <message>");
     safe_cout("/ping [N]");
     safe_cout("/netdiag");
-    safe_cout("Tip: packets never sleep");
 }
 
 int main() {
